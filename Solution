@@ -1,0 +1,55 @@
+class Solution {
+    public String longestPalindrome(String s) {
+        int index = 1, left = 1, right = 0, counter, Max;
+        boolean middle = true;
+        int[] edges = {0, 0}; 
+        String logestPali, PoliString="";
+
+        if (s.length()==0){
+            Max = 0;
+            logestPali="";
+        }
+        else{
+            Max = 1;
+            logestPali = s.charAt(0)+"";
+        }
+
+        while (index < s.length()) {
+            if (middle) {
+                right = 0;
+                PoliString = is_Palindromic(s, left, right, index);
+                if (PoliString.length()>Max){
+                    Max = PoliString.length();
+                    logestPali = PoliString;
+                }
+                middle=false;
+            }
+            else{
+                right = 1;
+                PoliString = is_Palindromic(s, left, right, index);
+                if (PoliString.length()>Max){
+                    Max = PoliString.length();
+                    logestPali = PoliString;
+                }
+                index++;
+                middle=true;
+            }
+        }
+        return logestPali;
+    }
+
+    public String is_Palindromic(String s, int left, int right, int index) {
+        String PoliString = "";
+        while (index - left >= 0 && index + right < s.length()) {
+            if (s.charAt(index - left) == s.charAt(index + right)) {
+                PoliString = s.substring((index - left), (index + right)+1);
+                left++;
+                right++;
+            }
+            else{
+                break;
+            }
+        }
+        return PoliString;
+    }
+}
